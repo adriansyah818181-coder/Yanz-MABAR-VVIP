@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MABAR VVIP Mobile Legends</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#080719;color:white}
+header{background:#100b2b;padding:15px 5%;display:flex;
+justify-content:space-between;align-items:center;flex-wrap:wrap;
+border-bottom:2px solid #8c00ff;gap:12px}
+.logo{font-size:22px;font-weight:bold;color:#ffd65a}
+nav{display:flex;gap:7px;flex-wrap:wrap}
+button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;
+font-weight:bold}
+nav button,.secondary{background:#201344;color:white;border:1px solid #6630a8}
+.primary{background:linear-gradient(90deg,#7900ff,#b000ff);color:white}
+.gold{background:#ffbd24;color:#160d00}
+button:hover{filter:brightness(1.2)}
+.hero{padding:65px 7%;min-height:290px;
+background:linear-gradient(90deg,#16002e,#27105e,#090a26);
+background-image:linear-gradient(90deg,rgba(10,0,30,.9),rgba(15,0,40,.4)),url('banner-mabar.png');
+background-position:center;background-size:cover}
+.hero h1{font-size:clamp(32px,6vw,58px);color:#d8a5ff}
+.hero p{margin:15px 0;font-size:18px}
+.container{padding:22px 5%}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card{background:#130e30;border:1px solid #7925bb;border-radius:15px;padding:18px;margin-bottom:15px}
+.card h2{color:#dfb0ff;margin-bottom:14px;font-size:21px}
+.item{padding:12px;background:#0b0920;border-radius:9px;margin:8px 0}
+input,select{width:100%;padding:13px;margin:7px 0;background:#080719;
+border:1px solid #6630a8;border-radius:8px;color:white}
+.page{display:none}
+.page.active{display:block}
+table{width:100%;border-collapse:collapse}
+td,th{padding:11px;text-align:left;border-bottom:1px solid #33204d}
+footer{text-align:center;padding:25px;background:#100b2b;color:#c9b5e8}
+.small{font-size:13px;color:#bba9d5}
+.badge{color:#4cff8a;font-weight:bold}
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">👑 MABAR VVIP</div>
+ <nav>
+  <button onclick="showPage('home')">🏠 Beranda</button>
+  <button onclick="showPage('jadwal')">📅 Jadwal</button>
+  <button onclick="showPage('room')">🎮 Room</button>
+  <button onclick="showPage('leaderboard')">🏆 Ranking</button>
+  <button onclick="showPage('aturan')">🛡️ Aturan</button>
+  <button onclick="showPage('profil')">👤 Profil</button>
+ </nav>
+ <div>
+  <button class="primary" onclick="showPage('login')">Login</button>
+  <button class="gold" onclick="showPage('daftar')">Daftar</button>
+ </div>
+</header>
+
+<section class="hero">
+ <h1>MABAR VVIP<br>MOBILE LEGENDS</h1>
+ <p>🔥 Mabar Seru, Menang Bersama!</p>
+ <button class="primary" onclick="showPage('daftar')">GABUNG SEKARANG ➜</button>
+</section>
+
+<main class="container">
+
+<!-- BERANDA -->
+<section id="home" class="page active">
+ <div class="grid">
+  <div class="card">
+   <h2>📅 Jadwal Mabar</h2>
+   <div id="homeJadwal"></div>
+   <button class="primary" onclick="showPage('jadwal')">Lihat Semua</button>
+  </div>
+  <div class="card">
+   <h2>🎮 Room Mabar</h2>
+   <div id="homeRoom"></div>
+   <button class="primary" onclick="showPage('room')">Masuk Room</button>
+  </div>
+  <div class="card">
+   <h2>🏆 Leaderboard</h2>
+   <div id="homeRank"></div>
+   <button class="primary" onclick="showPage('leaderboard')">Lihat Ranking</button>
+  </div>
+ </div>
+ <div class="card">
+  <h2>👑 Tentang MABAR VVIP</h2>
+  Komunitas untuk para pemain Mobile Legends yang ingin mencari teman
+  mabar, mengikuti turnamen, dan meningkatkan kemampuan bermain.
+ </div>
+</section>
+
+<!-- JADWAL -->
+<section id="jadwal" class="page">
+ <div class="card">
+  <h2>📅 Jadwal Mabar</h2>
+  <div id="jadwalList"></div>
+ </div>
+</section>
+
+<!-- ROOM -->
+<section id="room" class="page">
+ <div class="card">
+  <h2>🎮 Room Mabar</h2>
+  <div id="roomList"></div>
+ </div>
+</section>
+
+<!-- RANKING -->
+<section id="leaderboard" class="page">
+ <div class="card">
+  <h2>🏆 Leaderboard Member</h2>
+  <table>
+   <thead><tr><th>Rank</th><th>Nama</th><th>Win</th><th>Point</th></tr></thead>
+   <tbody id="rankList"></tbody>
+  </table>
+ </div>
+</section>
+
+<!-- ATURAN -->
+<section id="aturan" class="page">
+ <div class="card">
+  <h2>🛡️ Peraturan Mabar</h2>
+  <div class="item">1. Wajib menjaga kesopanan.</div>
+  <div class="item">2. Dilarang menggunakan cheat dan hack.</div>
+  <div class="item">3. Dilarang toxic kepada member lain.</div>
+  <div class="item">4. Wajib menghormati sesama pemain.</div>
+  <div class="item">5. Ikuti arahan admin saat turnamen.</div>
+ </div>
+</section>
+
+<!-- DAFTAR -->
+<section id="daftar" class="page">
+ <div class="card">
+  <h2>📝 Daftar Member</h2>
+  <input id="regNama" placeholder="Nama lengkap">
+  <input id="regUser" placeholder="Username">
+  <input id="regPass" type="password" placeholder="Password">
+  <button class="primary" onclick="register()">DAFTAR SEKARANG</button>
+  <p class="small">Sudah punya akun? <a href="#" onclick="showPage('login')">Login</a></p>
+ </div>
+</section>
+
+<!-- LOGIN -->
+<section id="login" class="page">
+ <div class="card">
+  <h2>🔐 Login Member / Admin</h2>
+  <input id="loginUser" placeholder="Username">
+  <input id="loginPass" type="password" placeholder="Password">
+  <button class="primary" onclick="login()">MASUK</button>
+  
+ </div>
+</section>
+
+<!-- PROFIL -->
+<section id="profil" class="page">
+ <div class="card">
+  <h2>👤 Profil Saya</h2>
+  <div id="profileInfo">Silakan login terlebih dahulu.</div>
+  <button class="primary" onclick="logout()">LOGOUT</button>
+ </div>
+</section>
+
+<!-- PANEL ADMIN -->
+<section id="admin" class="page">
+ <div class="card">
+  <h2>⚙️ PANEL ADMIN</h2>
+  <p>Selamat datang, Admin!</p>
+  <hr><br>
+  <h3>Tambah Jadwal Mabar</h3>
+  <input id="jadwalNama" placeholder="Nama kegiatan">
+  <input id="jadwalWaktu" placeholder="Tanggal dan waktu">
+  <button class="primary" onclick="addJadwal()">Tambah Jadwal</button>
+  <br><br>
+  <h3>Tambah Room</h3>
+  <input id="roomNama" placeholder="Nama Room">
+  <input id="roomId" placeholder="ID Room">
+  <input id="roomPass" placeholder="Password Room">
+  <button class="primary" onclick="addRoom()">Tambah Room</button>
+  <br><br>
+  <h3>Kelola Member</h3>
+  <div id="memberList"></div>
+  <br>
+  <button class="gold" onclick="logout()">KELUAR ADMIN</button>
+ </div>
+</section>
+
+</main>
+
+<footer>
+ <h3>👑 MABAR VVIP MOBILE LEGENDS</h3>
+ <p>Mabar Seru, Menang Bersama!</p>
+ <p class="small">© 2026 MABAR VVIP. All Rights Reserved.</p>
+</footer>
+
+<script>
+const getData=(key,def)=>JSON.parse(localStorage.getItem(key)||JSON.stringify(def));
+const save=(key,data)=>localStorage.setItem(key,JSON.stringify(data));
+
+let members=getData('members',[]);
+let jadwals=getData('jadwals',[
+ {nama:'Mabar Rank Classic',waktu:'19 November - 19:00 WIB'},
+ {nama:'Mabar Tournament',waktu:'20 November - 20:00 WIB'},
+ {nama:'Push Rank',waktu:'21 November - 19:30 WIB'}
+]);
+let rooms=getData('rooms',[
+ {nama:'Room VVIP #001',id:'123456',pass:'1111'}
+]);
+let ranks=getData('ranks',[
+ {nama:'RizkyMLBB',win:120,point:2500},
+ {nama:'BudiGaming',win:98,point:2200},
+ {nama:'DikaaX',win:90,point:2000}
+]);
+let current=getData('currentUser',null);
+
+function showPage(id){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ render();
+ window.scrollTo(0,0);
+}
+
+function register(){
+ let nama=regNama.value.trim(),user=regUser.value.trim(),pass=regPass.value;
+ if(!nama||!user||!pass)return alert('Lengkapi semua data!');
+ if(user.toLowerCase()==='admin')return alert('Username tidak tersedia!');
+ if(members.some(m=>m.user===user))return alert('Username sudah digunakan!');
+ members.push({nama,user,pass,role:'member'});
+ save('members',members);
+ alert('Pendaftaran berhasil! Silakan login.');
+ showPage('login');
+}
+
+function login(){
+ let user=loginUser.value.trim(),pass=loginPass.value;
+ if(user==='admin'&&pass==='admin123'){
+  current={nama:'Administrator',user:'admin',role:'admin'};
+ }else{
+  current=members.find(m=>m.user===user&&m.pass===pass);
+ }
+ if(!current)return alert('Username atau password salah!');
+ save('currentUser',current);
+ alert('Login berhasil!');
+ showPage(current.role==='admin'?'admin':'profil');
+}
+
+function logout(){
+ current=null;
+ localStorage.removeItem('currentUser');
+ alert('Kamu telah logout.');
+ showPage('home');
+}
+
+function addJadwal(){
+ let nama=jadwalNama.value.trim(),waktu=jadwalWaktu.value.trim();
+ if(!nama||!waktu)return alert('Isi semua data!');
+ jadwals.push({nama,waktu});
+ save('jadwals',jadwals);
+ jadwalNama.value='';jadwalWaktu.value='';
+ render();
+ alert('Jadwal berhasil ditambahkan!');
+}
+
+function addRoom(){
+ let nama=roomNama.value.trim(),id=roomId.value.trim(),pass=roomPass.value.trim();
+ if(!nama||!id||!pass)return alert('Isi semua data room!');
+ rooms.push({nama,id,pass});
+ save('rooms',rooms);
+ roomNama.value='';roomId.value='';roomPass.value='';
+ render();
+ alert('Room berhasil dibuat!');
+}
+
+function deleteJadwal(i){
+ if(!confirm('Hapus jadwal ini?'))return;
+ jadwals.splice(i,1);save('jadwals',jadwals);render();
+}
+function deleteRoom(i){
+ if(!confirm('Hapus room ini?'))return;
+ rooms.splice(i,1);save('rooms',rooms);render();
+}
+function deleteMember(i){
+ if(!confirm('Hapus member ini?'))return;
+ members.splice(i,1);save('members',members);render();
+}
+
+function joinRoom(i){
+ if(!current)return alert('Login dahulu untuk melihat detail room!');
+ alert('ID Room: '+rooms[i].id+'\\nPassword: '+rooms[i].pass);
+}
+
+function render(){
+ homeJadwal.innerHTML=jadwals.slice(0,3).map(x=>
+ `<div class="item">📅 ${x.nama}<br><span class="small">${x.waktu}</span></div>`).join('')||'Belum ada jadwal';
+ jadwalList.innerHTML=jadwals.map((x,i)=>
+ `<div class="item">📅 <b>${x.nama}</b><br>${x.waktu}
+ ${current?.role==='admin'?`<button onclick="deleteJadwal(${i})">Hapus</button>`:''}</div>`).join('')||'Belum ada jadwal';
+
+ homeRoom.innerHTML=rooms.slice(0,2).map(x=>
+ `<div class="item">🎮 ${x.nama}<br><span class="badge">● Online</span></div>`).join('')||'Belum ada room';
+ roomList.innerHTML=rooms.map((x,i)=>
+ `<div class="item">🎮 <b>${x.nama}</b><br>
+ <button class="primary" onclick="joinRoom(${i})">Lihat Detail Room</button>
+ ${current?.role==='admin'?`<button onclick="deleteRoom(${i})">Hapus</button>`:''}</div>`).join('')||'Belum ada room';
+
+ let sorted=[...ranks].sort((a,b)=>b.point-a.point);
+ rankList.innerHTML=sorted.map((x,i)=>
+ `<tr><td>${i+1}</td><td>${x.nama}</td><td>${x.win}</td><td>${x.point}</td></tr>`).join('');
+ homeRank.innerHTML=sorted.slice(0,3).map((x,i)=>
+ `<div class="item">🏆 ${i+1}. ${x.nama} — ${x.point} Poin</div>`).join('');
+
+ profileInfo.innerHTML=current?
+ `<h3>${current.nama}</h3><p>Username: ${current.user}</p><p>Role: ${current.role}</p>`:
+ 'Silakan login terlebih dahulu.';
+
+ memberList.innerHTML=members.map((m,i)=>
+ `<div class="item">${m.nama} (@${m.user}) 
+ <button onclick="deleteMember(${i})">Hapus</button></div>`).join('')||'Belum ada member';
+}
+render();
+</script>
+</body>
+</html>
